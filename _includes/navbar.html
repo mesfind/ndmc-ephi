@@ -133,7 +133,46 @@
     object-fit: contain;
     transition: transform 0.3s ease;
   }
-  
+  /* LOGO WITH TRANSPARENT BACKGROUND */
+.navbar-logo-link {
+    display: flex;
+    align-items: center;
+    height: 70px;
+    padding: 0 15px;
+    float: left;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.navbar-logo {
+    height: 50px;
+    width: auto;
+    max-width: 200px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    
+    /* REMOVE ALL BACKGROUNDS */
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    
+    /* For removing white backgrounds from PNG */
+    mix-blend-mode: multiply;
+}
+
+.navbar-logo:hover {
+    transform: scale(1.05);
+    background: transparent !important;
+}
+
+/* Override any Bootstrap defaults */
+.navbar-header a[class*="logo"],
+.navbar-header img[class*="logo"] {
+    background: transparent !important;
+}
   .navbar-logo:hover {
     transform: scale(1.05);
   }
