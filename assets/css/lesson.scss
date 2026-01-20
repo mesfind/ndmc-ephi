@@ -39,6 +39,57 @@ $bg-solution:    rgba(189, 189, 189, 0.08) !default;
 $bg-testimonial: rgba(236, 64, 122, 0.08) !default;
 
 //----------------------------------------
+// Logo Styling - FIXED
+//----------------------------------------
+
+img.navbar-logo {
+  height: 60px; // Increased from 40px for better visibility
+  width: auto; // Maintain aspect ratio
+  max-width: 200px; // Prevent overly wide logos
+  padding: 8px 15px 8px 0; // Adjusted padding for better spacing
+  object-fit: contain; // Ensure logo fits nicely
+  vertical-align: middle; // Align with text
+  transition: all 0.3s ease; // Smooth hover effect
+  
+  &:hover {
+    transform: scale(1.05); // Subtle hover effect
+    filter: brightness(1.1); // Slight brightening on hover
+  }
+}
+
+// For smaller screens
+@media (max-width: 768px) {
+  img.navbar-logo {
+    height: 50px; // Slightly smaller on mobile
+    padding: 6px 10px 6px 0;
+  }
+}
+
+// Logo in header/banner
+header img.logo,
+.banner-logo,
+.site-logo {
+  height: 80px; // Larger for prominent placement
+  width: auto;
+  max-width: 300px;
+  margin: 20px auto;
+  display: block;
+  object-fit: contain;
+}
+
+// Footer logo styling
+footer img.logo {
+  height: 40px;
+  width: auto;
+  margin: 10px;
+  opacity: 0.8;
+  
+  &:hover {
+    opacity: 1;
+  }
+}
+
+//----------------------------------------
 // Specialized Code Blocks with Modern Design
 //----------------------------------------
 
@@ -378,6 +429,7 @@ figure {
     
     img {
         margin: 0 auto;
+        max-width: 100%; // Ensure images don't overflow
     }
     
     figcaption {
@@ -523,6 +575,11 @@ div.life-cycle {
     pre, code {
         font-size: 13px !important;
     }
+    
+    img.navbar-logo {
+        height: 50px;
+        padding: 6px 10px 6px 0;
+    }
 }
 
 //----------------------------------------
@@ -545,5 +602,83 @@ div.life-cycle {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+//----------------------------------------
+// Navigation Bar Styling
+//----------------------------------------
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    
+    img {
+        height: 60px;
+        width: auto;
+        margin-right: 15px;
+    }
+}
+
+// If using Bootstrap navbar
+.navbar {
+    .navbar-brand {
+        img {
+            height: 50px; // Slightly smaller for navbar
+            @media (min-width: 768px) {
+                height: 60px;
+            }
+        }
+    }
+}
+
+// Workshop header with logo
+.workshop-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px 0;
+    
+    .logo-container {
+        flex: 0 0 auto;
+    }
+    
+    .title-container {
+        flex: 1 1 auto;
+        min-width: 200px;
+    }
+    
+    img {
+        height: 100px; // Large for workshop header
+        width: auto;
+        max-width: 250px;
+        
+        @media (max-width: 768px) {
+            height: 80px;
+        }
+    }
+}
+
+// Partner/Sponsor logos
+.partner-logos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin: 40px 0;
+    
+    img {
+        height: 60px;
+        width: auto;
+        max-width: 150px;
+        opacity: 0.8;
+        transition: opacity 0.3s ease;
+        
+        &:hover {
+            opacity: 1;
+        }
     }
 }
