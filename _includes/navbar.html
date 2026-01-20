@@ -13,15 +13,15 @@
 
       {% comment %} Select what logo to display. {% endcomment %}
       {% if page.carpentry == "swc" %}
-      <a href="{{ site.swc_site }}" class="pull-left">
+      <a href="{{ site.swc_site }}" class="navbar-logo-link">
         <img class="navbar-logo" src="{{ page.root }}/assets/img/swc-icon-blue.svg" alt="Software Carpentry logo" />
       </a>
       {% elsif page.carpentry == "dc" %}
-      <a href="https://ephi.gov.et" class="pull-left">
-        <img class="navbar-logo" src="{{ page.root }}/assets/img/ephi_logo.jpg" alt="EPHI" />
+      <a href="https://ephi.gov.et" class="navbar-logo-link">
+        <img class="navbar-logo" src="{{ page.root }}/assets/img/ephi_logo.jpg" alt="EPHI logo" />
       </a>
       {% elsif page.carpentry == "lc" %}
-      <a href="{{ site.lc_site }}" class="pull-left">
+      <a href="{{ site.lc_site }}" class="navbar-logo-link">
         <img class="navbar-logo" src="{{ page.root }}/assets/img/lc-icon-black.png" alt="Library Carpentry logo" />
       </a>
       {% endif %}
@@ -31,61 +31,73 @@
 
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-
-        {% comment %} Show setup instructions, reference guide, and lesson episodes for lessons. {% endcomment %}
+      <ul class="nav navbar-nav navbar-main">
+        
+        {% comment %} Show setup instructions for lessons. {% endcomment %}
         {% if site.kind == "lesson" %}
         <li><a href="{{ page.root }}/setup/">Setup</a></li>
+        {% endif %}
+        
+        {% comment %} Workshop-specific navigation items {% endcomment %}
+        <li><a href="{{ page.root }}/#schedule">Schedule</a></li>
+        <li><a href="{{ page.root }}/#syllabus">Syllabus</a></li>
+        <li><a href="{{ page.root }}/#setup">Installation</a></li>
+        
+        {% comment %} Show episodes dropdown for lessons {% endcomment %}
+        {% if site.kind == "lesson" %}
         <li class="dropdown">
-          <a href="{{ page.root }}/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Episodes <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            Lessons <span class="caret"></span>
+          </a>
           <ul class="dropdown-menu">
             {% for episode in site.episodes %}
             <li><a href="{{ page.root }}{{ episode.url }}">{{ episode.title }}</a></li>
             {% endfor %}
             <li role="separator" class="divider"></li>
-            <li><a href="{{ page.root }}/aio/">All in one page (Beta)</a></li>
+            <li><a href="{{ page.root }}/aio/">All in One Page</a></li>
           </ul>
         </li>
         {% endif %}
 
-        {% comment %} Show extras for lessons or if this is the main workshop-template repo (where they contain documentation). {% endcomment %}
+        {% comment %} Show extras dropdown {% endcomment %}
         {% if site.kind == "lesson" or site.github.repository_name == "workshop-template" %}
         <li class="dropdown">
-          <a href="{{ page.root }}/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Extras <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            Resources <span class="caret"></span>
+          </a>
           <ul class="dropdown-menu">
-            <li><a href="{{ page.root }}/reference/">Reference</a></li>
+            <li><a href="{{ page.root }}/reference/">Reference Guide</a></li>
             {% for extra in site.extras %}
             <li><a href="{{ page.root }}{{ extra.url }}">{{ extra.title }}</a></li>
             {% endfor %}
           </ul>
         </li>
         {% endif %}
-
-        {% comment %} Workshop-specific navigation items {% endcomment %}
-        <li><a href="{{ page.root }}/#schedule">Schedule</a></li>
-        <li><a href="{{ page.root }}/#syllabus">Syllabus</a></li>
-        <li><a href="{{ page.root }}/#setup">Setup</a></li>
         
-        {% comment %} Always show contact info {% endcomment %}
+        {% comment %} Contact and important links {% endcomment %}
         <li><a href="{{ page.root }}/#contact">Contact</a></li>
-
-        {% comment %} Always show code of conduct. {% endcomment %}
-        <li><a href="{{ page.root }}/conduct/">Code of Conduct</a></li>
-
-        {% comment %} Always show license. {% endcomment %}
+        <li><a href="{{ page.root }}/conduct/">Conduct</a></li>
         <li><a href="{{ page.root }}/license/">License</a></li>
-        
+
+      </ul>
+      
+      {% comment %} Edit page link {% endcomment %}
+      <ul class="nav navbar-nav navbar-right navbar-edit">
         {% if page.source %}
           {% if page.source == "Rmd" %}
-          <li><a href="{{site.github.repository_url}}/edit/gh-pages/{{page.path|replace: "_episodes", "_episodes_rmd" | replace: ".md", ".Rmd"}}">Improve this page <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></li>
+          <li><a href="{{site.github.repository_url}}/edit/gh-pages/{{page.path|replace: "_episodes", "_episodes_rmd" | replace: ".md", ".Rmd"}}" class="edit-link">
+            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit
+          </a></li>
           {% endif %}
         {% else %}
-          <li><a href="{{site.github.repository_url}}/edit/gh-pages/{{page.path}}">Improve this page <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></li>
+          <li><a href="{{site.github.repository_url}}/edit/gh-pages/{{page.path}}" class="edit-link">
+            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit
+          </a></li>
         {% endif %}
       </ul>
       
       {% comment %} Search form {% endcomment %}
-      <form class="navbar-form navbar-right" role="search" id="search" onsubmit="google_search(); return false;">
+      <form class="navbar-form navbar-right navbar-search" role="search" id="search" onsubmit="google_search(); return false;">
         <div class="form-group">
           <input type="text" id="google-search" placeholder="Search..." aria-label="Google site search">
         </div>
@@ -95,56 +107,148 @@
 </nav>
 
 <style>
-  /* Additional navbar styling to match the workshop theme */
+  /* Reset and base styles */
+  .navbar {
+    min-height: 70px;
+    margin-bottom: 0;
+  }
+  
   .navbar-default {
     background: linear-gradient(135deg, #4a6bff, #8b5cf6);
     border: none;
+    border-radius: 0;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   }
   
-  .navbar-default .navbar-brand,
-  .navbar-default .navbar-nav > li > a {
-    color: white;
+  /* Logo styling */
+  .navbar-logo-link {
+    display: flex;
+    align-items: center;
+    height: 70px;
+    padding: 0 15px;
+    float: left;
+  }
+  
+  .navbar-logo {
+    height: 50px;
+    width: auto;
+    max-width: 200px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+  }
+  
+  .navbar-logo:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Brand/home link */
+  .navbar-brand {
+    height: 70px;
+    line-height: 40px;
+    padding: 15px;
+    font-size: 18px;
     font-weight: 600;
+    color: white !important;
   }
   
-  .navbar-default .navbar-brand:hover,
-  .navbar-default .navbar-nav > li > a:hover {
-    color: #00d4aa;
-    background-color: transparent;
+  .navbar-brand:hover {
+    color: #00d4aa !important;
+    background-color: transparent !important;
   }
   
-  .navbar-default .navbar-toggle {
-    border-color: white;
+  /* Main navigation items - FIXED VERTICAL ALIGNMENT */
+  .navbar-main {
+    display: flex;
+    align-items: center;
+    height: 70px;
   }
   
-  .navbar-default .navbar-toggle .icon-bar {
-    background-color: white;
+  .navbar-main > li {
+    display: flex;
+    align-items: center;
+    height: 100%;
   }
   
-  .navbar-default .navbar-toggle:hover,
-  .navbar-default .navbar-toggle:focus {
-    background-color: rgba(255, 255, 255, 0.1);
+  .navbar-main > li > a {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 15px;
+    color: white !important;
+    font-weight: 500;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
   }
   
+  .navbar-main > li > a:hover,
+  .navbar-main > li > a:focus {
+    color: #00d4aa !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  /* Dropdown menus */
   .dropdown-menu {
     border-radius: 8px;
     border: none;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    min-width: 200px;
+    margin-top: 0;
   }
   
   .dropdown-menu > li > a {
-    padding: 10px 20px;
+    padding: 12px 20px;
+    color: #2c3e50;
+    font-size: 14px;
+    transition: all 0.2s ease;
   }
   
   .dropdown-menu > li > a:hover {
     background: linear-gradient(135deg, #4a6bff, #8b5cf6);
     color: white;
+    padding-left: 25px;
   }
   
-  /* Search form styling */
-  .navbar-form .form-group {
+  /* Edit link */
+  .navbar-edit {
+    display: flex;
+    align-items: center;
+    height: 70px;
+  }
+  
+  .edit-link {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 15px;
+    color: white !important;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  
+  .edit-link:hover {
+    color: #00d4aa !important;
+    background-color: transparent !important;
+  }
+  
+  .edit-link .glyphicon {
+    margin-right: 5px;
+  }
+  
+  /* Search form - FIXED ALIGNMENT */
+  .navbar-search {
+    display: flex;
+    align-items: center;
+    height: 70px;
     margin: 0;
+    padding: 0 15px;
+  }
+  
+  .navbar-search .form-group {
+    margin: 0;
+    display: flex;
+    align-items: center;
   }
   
   #google-search {
@@ -152,8 +256,10 @@
     border: 2px solid rgba(255, 255, 255, 0.2);
     background: rgba(255, 255, 255, 0.1);
     color: white;
-    padding: 6px 15px;
+    padding: 8px 20px;
+    width: 200px;
     transition: all 0.3s ease;
+    font-size: 14px;
   }
   
   #google-search:focus {
@@ -161,25 +267,144 @@
     border-color: #00d4aa;
     outline: none;
     box-shadow: 0 0 10px rgba(0, 212, 170, 0.3);
+    width: 250px;
   }
   
   #google-search::placeholder {
     color: rgba(255, 255, 255, 0.7);
   }
   
-  /* Responsive adjustments */
-  @media (max-width: 767px) {
-    .navbar-form {
-      margin: 8px 15px;
-      width: calc(100% - 30px);
+  /* Mobile toggle button */
+  .navbar-toggle {
+    margin: 18px 15px;
+    border-color: white;
+  }
+  
+  .navbar-toggle .icon-bar {
+    background-color: white;
+  }
+  
+  .navbar-toggle:hover,
+  .navbar-toggle:focus {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Mobile responsive adjustments */
+  @media (max-width: 991px) {
+    .navbar-main,
+    .navbar-edit,
+    .navbar-search {
+      height: auto;
     }
     
-    .navbar-form .form-group {
+    .navbar-main > li {
+      height: auto;
+    }
+    
+    .navbar-main > li > a {
+      height: auto;
+      padding: 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .navbar-edit {
+      padding: 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .navbar-search {
+      padding: 15px;
       width: 100%;
     }
     
     #google-search {
       width: 100%;
     }
+    
+    #google-search:focus {
+      width: 100%;
+    }
+    
+    .dropdown-menu {
+      position: static;
+      float: none;
+      width: auto;
+      margin-top: 0;
+      background-color: rgba(0, 0, 0, 0.1);
+      border: none;
+      box-shadow: none;
+    }
+    
+    .dropdown-menu > li > a {
+      color: white;
+      padding-left: 30px;
+    }
+    
+    .dropdown-menu > li > a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      padding-left: 35px;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .navbar-logo {
+      height: 40px;
+    }
+    
+    .navbar-brand {
+      font-size: 16px;
+      padding: 15px 10px;
+    }
+  }
+  
+  /* Active state for current page */
+  .navbar-main > li.active > a {
+    color: #00d4aa !important;
+    background-color: rgba(255, 255, 255, 0.1);
+    font-weight: 600;
+  }
+  
+  /* Smooth hover animation */
+  .navbar-main > li > a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: #00d4aa;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+  }
+  
+  .navbar-main > li > a:hover::after {
+    width: calc(100% - 30px);
   }
 </style>
+
+<script>
+  // Add active class to current page
+  document.addEventListener('DOMContentLoaded', function() {
+    var currentUrl = window.location.pathname;
+    var navLinks = document.querySelectorAll('.navbar-main > li > a');
+    
+    navLinks.forEach(function(link) {
+      var linkUrl = link.getAttribute('href');
+      if (currentUrl === linkUrl || 
+          (linkUrl.includes('#') && window.location.hash === linkUrl) ||
+          (currentUrl.endsWith('/') && linkUrl === './')) {
+        link.parentElement.classList.add('active');
+      }
+    });
+    
+    // Handle dropdown items
+    var dropdownLinks = document.querySelectorAll('.dropdown-menu a');
+    dropdownLinks.forEach(function(link) {
+      var linkUrl = link.getAttribute('href');
+      if (currentUrl === linkUrl) {
+        link.parentElement.classList.add('active');
+        link.closest('.dropdown').classList.add('active');
+      }
+    });
+  });
+</script>
