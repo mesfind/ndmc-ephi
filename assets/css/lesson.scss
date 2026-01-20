@@ -2,154 +2,548 @@
 ---
 
 //----------------------------------------
-// Colors.
+// Modern Color Palette
 //----------------------------------------
 
-// branding
-$color-brand:       #2b3990 !default;
+// Base colors with modern gradients
+$color-primary:   #4a6bff !default;
+$color-secondary: #8b5cf6 !default;
+$color-accent:    #00d4aa !default;
 
-// code boxes
-$color-error:       #bd2c00 !default;
-$color-output:      #303030 !default;
-$color-source:      #6e5494 !default;
+// Code boxes - modern vibrant colors
+$color-error:     linear-gradient(135deg, #ff6b6b, #ff4757) !default;
+$color-warning:   linear-gradient(135deg, #ffd93d, #ff9a3d) !default;
+$color-output:    linear-gradient(135deg, #303030, #404040) !default;
+$color-source:    linear-gradient(135deg, #6c5ce7, #a29bfe) !default;
 
-// blockquotes
-$color-callout:     #f4fd9c !default;
-$color-challenge:   #eec275 !default;
-$color-checklist:   #dfd2a0 !default;
-$color-discussion:  #eec275 !default;
-$color-keypoints:   #7ae78e !default;
-$color-objectives:  #daee84 !default;
-$color-prereq:      #9cd6dc !default;
-$color-solution:    #ded4b9 !default;
-$color-testimonial: #fc8dc1 !default;
+// Blockquotes - modern pastel gradients
+$color-callout:     linear-gradient(135deg, #fff9c4, #ffeb3b) !default;
+$color-challenge:   linear-gradient(135deg, #ffb74d, #ff9800) !default;
+$color-checklist:   linear-gradient(135deg, #d7ccc8, #a1887f) !default;
+$color-discussion:  linear-gradient(135deg, #ffcc80, #ffb74d) !default;
+$color-keypoints:   linear-gradient(135deg, #81c784, #4caf50) !default;
+$color-objectives:  linear-gradient(135deg, #dce775, #cddc39) !default;
+$color-prereq:      linear-gradient(135deg, #80deea, #26c6da) !default;
+$color-solution:    linear-gradient(135deg, #e0e0e0, #bdbdbd) !default;
+$color-testimonial: linear-gradient(135deg, #f48fb1, #ec407a) !default;
+
+// Background tints for blockquotes
+$bg-callout:     rgba(255, 235, 59, 0.08) !default;
+$bg-challenge:   rgba(255, 152, 0, 0.08) !default;
+$bg-checklist:   rgba(161, 136, 127, 0.08) !default;
+$bg-discussion:  rgba(255, 183, 77, 0.08) !default;
+$bg-keypoints:   rgba(76, 175, 80, 0.08) !default;
+$bg-objectives:  rgba(205, 220, 57, 0.08) !default;
+$bg-prereq:      rgba(38, 198, 218, 0.08) !default;
+$bg-solution:    rgba(189, 189, 189, 0.08) !default;
+$bg-testimonial: rgba(236, 64, 122, 0.08) !default;
 
 //----------------------------------------
-// Specialized code blocks.
+// Specialized Code Blocks with Modern Design
 //----------------------------------------
 
 @mixin cdSetup($color) {
-  color: $color;
-  border-left: solid 5px $color;
-  margin-bottom: 0px;
-  border-radius: 4px 0 0 4px;
+    position: relative;
+    overflow: hidden;
+    color: white;
+    margin: 20px 0;
+    padding: 0;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: $color;
+    }
+    
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
 }
 
-.error  { @include cdSetup($color-error); }
-.output { @include cdSetup($color-output); }
-.source { @include cdSetup($color-source); }
+@mixin codeHeader($color, $content) {
+    background: $color;
+    color: white;
+    padding: 14px 20px;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
+    &::before {
+        content: $content;
+        font-family: 'Material Icons';
+        font-size: 18px;
+        font-weight: normal;
+    }
+}
 
-.bash   { @include cdSetup($color-source); }
-.make   { @include cdSetup($color-source); }
-.matlab { @include cdSetup($color-source); }
-.python { @include cdSetup($color-source); }
-.r      { @include cdSetup($color-source); }
-.sql    { @include cdSetup($color-source); }
+@mixin codeContent() {
+    padding: 20px;
+    background: #1a1a2e;
+    color: #e0e0e0;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    border-radius: 0 0 12px 12px;
+    overflow-x: auto;
+    
+    pre {
+        margin: 0;
+        background: transparent !important;
+        padding: 0 !important;
+    }
+    
+    code {
+        background: transparent !important;
+        padding: 0 !important;
+        color: inherit !important;
+        white-space: pre-wrap !important;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+}
 
-.error pre,
-.output pre,
-.source pre,
-.bash pre,
-.make pre,
-.matlab pre,
-.python pre,
-.r pre,
-.sql pre {
-  border-radius: 0 4px 4px 0;
+.error   { @include cdSetup($color-error); }
+.warning { @include cdSetup($color-warning); }
+.output  { @include cdSetup($color-output); }
+.source  { @include cdSetup($color-source); }
+
+.bash, .language-bash     { @include cdSetup($color-source); }
+.make, .language-make     { @include cdSetup($color-source); }
+.matlab, .language-matlab { @include cdSetup($color-source); }
+.python, .language-python { @include cdSetup($color-source); }
+.r, .language-r           { @include cdSetup($color-source); }
+.sql, .language-sql       { @include cdSetup($color-source); }
+
+.error::before,
+.warning::before,
+.output::before,
+.source::before,
+.bash::before, .language-bash::before,
+.make::before, .language-make::before,
+.matlab::before, .language-matlab::before,
+.python::before, .language-python::before,
+.r::before, .language-r::before,
+.sql::before, .language-sql::before {
+    background: none;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    height: auto;
+}
+
+.error::before  { @include codeHeader($color-error, "\e000"); }
+.warning::before { @include codeHeader($color-warning, "\e002"); }
+.output::before { @include codeHeader($color-output, "\e86f"); }
+.source::before { @include codeHeader($color-source, "\e86f"); }
+.bash::before, .language-bash::before { @include codeHeader($color-source, "\e5d0"); content: "Terminal"; }
+.make::before, .language-make::before { @include codeHeader($color-source, "\e869"); content: "Makefile"; }
+.matlab::before, .language-matlab::before { @include codeHeader($color-source, "\e869"); content: "MATLAB"; }
+.python::before, .language-python::before { @include codeHeader($color-source, "\e6dd"); content: "Python"; }
+.r::before, .language-r::before { @include codeHeader($color-source, "\e80b"); content: "R"; }
+.sql::before, .language-sql::before { @include codeHeader($color-source, "\e896"); content: "SQL"; }
+
+.error > *:not(:first-child),
+.warning > *:not(:first-child),
+.output > *:not(:first-child),
+.source > *:not(:first-child),
+.bash > *:not(:first-child), .language-bash > *:not(:first-child),
+.make > *:not(:first-child), .language-make > *:not(:first-child),
+.matlab > *:not(:first-child), .language-matlab > *:not(:first-child),
+.python > *:not(:first-child), .language-python > *:not(:first-child),
+.r > *:not(:first-child), .language-r > *:not(:first-child),
+.sql > *:not(:first-child), .language-sql > *:not(:first-child) {
+    @include codeContent();
 }
 
 //----------------------------------------
-// Specialized blockquote environments for learning objectives, callouts, etc.
+// Specialized Blockquote Environments
 //----------------------------------------
 
-$codeblock-padding: 5px !default;
+@mixin bkSetup($color, $bg-color, $glyph) {
+    position: relative;
+    padding: 0;
+    border: none;
+    border-radius: 16px;
+    margin: 30px 0;
+    background: $bg-color;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 5px;
+        background: $color;
+    }
+    
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    }
+    
+    h2 {
+        background: $color;
+        color: white;
+        padding: 18px 24px;
+        margin: 0;
+        font-size: 18px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        
+        &::before {
+            font-family: 'Material Icons';
+            content: $glyph;
+            font-size: 22px;
+            font-weight: normal;
+        }
+    }
+    
+    & > *:not(h2) {
+        padding: 24px;
+    }
+}
 
-@mixin bkSetup($color, $glyph) {
+.callout{ @include bkSetup($color-callout, $bg-callout, "\e8b8"); }
+.challenge{ @include bkSetup($color-challenge, $bg-challenge, "\e86c"); }
+.checklist{ @include bkSetup($color-checklist, $bg-checklist, "\e8b9"); }
+.discussion{ @include bkSetup($color-discussion, $bg-discussion, "\e0cb"); }
+.keypoints{ @include bkSetup($color-keypoints, $bg-keypoints, "\e8dc"); }
+.objectives{ @include bkSetup($color-objectives, $bg-objectives, "\e85d"); }
+.prereq{ @include bkSetup($color-prereq, $bg-prereq, "\e88e"); }
+.solution{ @include bkSetup($color-solution, $bg-solution, "\e8b6"); }
+.testimonial{ @include bkSetup($color-testimonial, $bg-testimonial, "\e0b7"); }
 
-  $gradientcolor1: $color;
-  $gradientcolor2: scale-color($color, $lightness: 10%);
+.callout h3,
+.challenge h3,
+.checklist h3,
+.discussion h3,
+.keypoints h3,
+.objectives h3,
+.prereq h3,
+.solution h3,
+.testimonial h3 {
+    font-size: 16px;
+    color: #2c3e50;
+    margin-top: 0;
+}
 
-  padding-left: $codeblock-padding;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-right: 0;
-  border: 1px solid;
-  border-color: $color;
-  padding-bottom: $codeblock-padding;
+//----------------------------------------
+// Modern Typography & Layout
+//----------------------------------------
 
-  h2 {
-    padding-top: $codeblock-padding;
-    padding-bottom: $codeblock-padding;
-    font-size: 20px;
-    background: linear-gradient(to bottom, $gradientcolor1, $gradientcolor2);
-    border-color: $color;
-    margin-top: 0px;
-    margin-left: -$codeblock-padding; // to move back to the left margin of the enclosing blockquote
-  }
-  h2:before {
-    font-family: 'Glyphicons Halflings';
-    content: $glyph;
-    float: left;
-    padding-left: $codeblock-padding;
-    padding-right: $codeblock-padding;
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.7;
+    color: #2c3e50;
+}
+
+article {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    
+    h1 {
+        font-size: 2.5em;
+        font-weight: 800;
+        background: linear-gradient(135deg, $color-primary, $color-secondary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 0 0 1em 0;
+        line-height: 1.2;
+    }
+    
+    h2 {
+        font-size: 1.8em;
+        font-weight: 700;
+        margin: 60px 0 20px 0;
+        padding-bottom: 15px;
+        border-bottom: 2px solid;
+        border-image: linear-gradient(90deg, $color-primary, transparent) 1;
+        color: #1a1a2e;
+    }
+    
+    h3 {
+        font-size: 1.4em;
+        font-weight: 600;
+        margin: 40px 0 15px 0;
+        color: #2c3e50;
+    }
+    
+    p {
+        margin: 1.2em 0;
+        font-size: 16px;
+        color: #4a5568;
+    }
+}
+
+//----------------------------------------
+// Enhanced Code Styling
+//----------------------------------------
+
+code:not([class]) {
+    background: linear-gradient(135deg, #f6f8fa, #eaeef2);
+    color: #d73a49;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 0.9em;
+    border: 1px solid #dfe2e5;
+    white-space: nowrap;
+}
+
+pre {
+    border-radius: 12px !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1) !important;
+    margin: 24px 0 !important;
+    overflow: hidden;
+    
+    code {
+        padding: 20px !important;
+        font-size: 14px !important;
+        line-height: 1.6 !important;
+        background: transparent !important;
+        border: none !important;
+    }
+}
+
+//----------------------------------------
+// Modern Lists
+//----------------------------------------
+
+ul, ol {
+    padding-left: 1.5em;
+    margin: 1.5em 0;
+    
+    li {
+        margin: 0.6em 0;
+        padding-left: 0.5em;
+        
+        &::marker {
+            color: $color-primary;
+        }
+    }
+}
+
+ul {
+    list-style: none;
+    
+    li::before {
+        content: "•";
+        color: $color-primary;
+        font-weight: bold;
+        display: inline-block;
+        width: 1em;
+        margin-left: -1em;
+    }
+}
+
+//----------------------------------------
+// Images & Figures
+//----------------------------------------
+
+article img {
+    display: block;
+    margin: 40px auto;
+    max-width: 90%;
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    &:hover {
+        transform: scale(1.02);
+        box-shadow: 0 16px 50px rgba(0, 0, 0, 0.2);
+    }
+}
+
+figure {
+    margin: 40px auto;
+    text-align: center;
+    
+    img {
+        margin: 0 auto;
+    }
+    
+    figcaption {
+        margin-top: 12px;
+        font-size: 14px;
+        color: #718096;
+        font-style: italic;
+        line-height: 1.5;
+    }
+}
+
+//----------------------------------------
+// Interactive Elements
+//----------------------------------------
+
+kbd {
     display: inline-block;
-    -webkit-font-smoothing: antialiased;
-  }
-
-}
-
-.callout{ @include bkSetup($color-callout, "\e146"); }
-.challenge{ @include bkSetup($color-challenge, "\270f"); }
-.checklist{ @include bkSetup($color-checklist, "\e067"); }
-.discussion{ @include bkSetup($color-discussion, "\e123"); }
-.keypoints{ @include bkSetup($color-keypoints, "\e101"); }
-.objectives{ @include bkSetup($color-objectives, "\e085"); }
-.prereq{ @include bkSetup($color-prereq, "\e124"); }
-.solution{ @include bkSetup($color-solution, "\e105"); }
-.testimonial{ @include bkSetup($color-testimonial, "\e143"); }
-
-//----------------------------------------
-// Override Bootstrap settings.
-//----------------------------------------
-
-code {
-  padding: 2px 5px;
-  color: #3d90d9;
-  background-color: #e7e7e7;
-}
-
-img {
-  max-width: 100%;
+    padding: 4px 10px;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: #2d3748;
+    background: linear-gradient(135deg, #f7fafc, #edf2f7);
+    border: 1px solid #cbd5e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05), inset 0 1px 0 white;
+    white-space: nowrap;
+    margin: 0 4px;
+    transition: all 0.2s ease;
+    
+    &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 0 white;
+    }
 }
 
 //----------------------------------------
-// Miscellaneous.
+// Life Cycle Box - Modern Design
 //----------------------------------------
 
-.maintitle {
-  text-align: center;
+div.life-cycle {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    padding: 12px;
+    border-radius: 0 0 12px 12px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    animation: slideDown 0.5s ease;
 }
 
-.footertext {
-  text-align: center;
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
-img.navbar-logo {
-  height: 40px; // synchronize with height of navbar
-  padding-top: 5px;
-  padding-right: 10px;
+.pre-alpha {
+    color: #c53030;
+    background: linear-gradient(135deg, rgba(254, 226, 226, 0.95), rgba(252, 165, 165, 0.95));
+    border-bottom: 3px solid #c53030;
 }
 
-div.branding {
-  color: $color-brand;
+.alpha {
+    color: #975a16;
+    background: linear-gradient(135deg, rgba(254, 243, 199, 0.95), rgba(252, 211, 77, 0.95));
+    border-bottom: 3px solid #d97706;
 }
 
-ul,
-ol {
-  padding-left: 2em;
+.beta {
+    color: #1e40af;
+    background: linear-gradient(135deg, rgba(219, 234, 254, 0.95), rgba(147, 197, 253, 0.95));
+    border-bottom: 3px solid #3b82f6;
 }
 
-span.fold-unfold {
-  margin-left: 1em;
-  opacity: 0.5;
+//----------------------------------------
+// Custom Scrollbar
+//----------------------------------------
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, $color-primary, $color-secondary);
+    border-radius: 10px;
+    
+    &:hover {
+        background: linear-gradient(135deg, darken($color-primary, 10%), darken($color-secondary, 10%));
+    }
+}
+
+//----------------------------------------
+// Responsive Design
+//----------------------------------------
+
+@media (max-width: 768px) {
+    article {
+        padding: 20px 15px;
+        
+        h1 {
+            font-size: 2em;
+        }
+        
+        h2 {
+            font-size: 1.5em;
+        }
+        
+        h3 {
+            font-size: 1.2em;
+        }
+    }
+    
+    .callout,
+    .challenge,
+    .checklist,
+    .discussion,
+    .keypoints,
+    .objectives,
+    .prereq,
+    .solution,
+    .testimonial {
+        margin: 20px 0;
+        border-radius: 12px;
+    }
+    
+    pre, code {
+        font-size: 13px !important;
+    }
+}
+
+//----------------------------------------
+// Smooth Animations
+//----------------------------------------
+
+* {
+    scroll-behavior: smooth;
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
