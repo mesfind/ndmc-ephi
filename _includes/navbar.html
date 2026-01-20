@@ -33,15 +33,15 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-main">
         
-        {% comment %} Show setup instructions for lessons. {% endcomment %}
-        {% if site.kind == "lesson" %}
-        <li><a href="{{ page.root }}/setup/">Setup</a></li>
-        {% endif %}
-        
         {% comment %} Workshop-specific navigation items {% endcomment %}
         <li><a href="{{ page.root }}/#schedule">Schedule</a></li>
         <li><a href="{{ page.root }}/#syllabus">Syllabus</a></li>
         <li><a href="{{ page.root }}/#setup">Installation</a></li>
+        
+        {% comment %} Show setup instructions for lessons. {% endcomment %}
+        {% if site.kind == "lesson" %}
+        <li><a href="{{ page.root }}/setup/">Setup</a></li>
+        {% endif %}
         
         {% comment %} Show episodes dropdown for lessons {% endcomment %}
         {% if site.kind == "lesson" %}
@@ -73,10 +73,20 @@
           </ul>
         </li>
         {% endif %}
+        
         {% comment %} Contact and important links {% endcomment %}
         <li><a href="{{ page.root }}/#contact">Contact</a></li>
+        <li><a href="{{ page.root }}/conduct/">Conduct</a></li>
+        <li><a href="{{ page.root }}/license/">License</a></li>
 
       </ul>
+      
+      {% comment %} Search form {% endcomment %}
+      <form class="navbar-form navbar-right navbar-search" role="search" id="search" onsubmit="google_search(); return false;">
+        <div class="form-group">
+          <input type="text" id="google-search" placeholder="Search..." aria-label="Google site search">
+        </div>
+      </form>
       
       {% comment %} Edit page link {% endcomment %}
       <ul class="nav navbar-nav navbar-right navbar-edit">
@@ -92,13 +102,6 @@
           </a></li>
         {% endif %}
       </ul>
-      
-      {% comment %} Search form {% endcomment %}
-      <form class="navbar-form navbar-right navbar-search" role="search" id="search" onsubmit="google_search(); return false;">
-        <div class="form-group">
-          <input type="text" id="google-search" placeholder="Search..." aria-label="Google site search">
-        </div>
-      </form>
     </div>
   </div>
 </nav>
@@ -117,24 +120,8 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   }
   
-  /* Logo styling */
-  .navbar-logo-link {
-    display: flex;
-    align-items: center;
-    height: 70px;
-    padding: 0 15px;
-    float: left;
-  }
-  
-  .navbar-logo {
-    height: 50px;
-    width: auto;
-    max-width: 200px;
-    object-fit: contain;
-    transition: transform 0.3s ease;
-  }
   /* LOGO WITH TRANSPARENT BACKGROUND */
-.navbar-logo-link {
+  .navbar-logo-link {
     display: flex;
     align-items: center;
     height: 70px;
@@ -143,9 +130,10 @@
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
-}
-
-.navbar-logo {
+    transition: all 0.3s ease;
+  }
+  
+  .navbar-logo {
     height: 50px;
     width: auto;
     max-width: 200px;
@@ -158,23 +146,20 @@
     background-image: none !important;
     border: none !important;
     box-shadow: none !important;
+    outline: none !important;
     
-    /* For removing white backgrounds from PNG */
+    /* For removing white backgrounds from JPG/PNG */
     mix-blend-mode: multiply;
-}
-
-.navbar-logo:hover {
-    transform: scale(1.05);
-    background: transparent !important;
-}
-
-/* Override any Bootstrap defaults */
-.navbar-header a[class*="logo"],
-.navbar-header img[class*="logo"] {
-    background: transparent !important;
-}
+  }
+  
   .navbar-logo:hover {
     transform: scale(1.05);
+  }
+  
+  /* Override any Bootstrap defaults */
+  .navbar-header a[class*="logo"],
+  .navbar-header img[class*="logo"] {
+    background: transparent !important;
   }
   
   /* Brand/home link */
@@ -185,6 +170,7 @@
     font-size: 18px;
     font-weight: 600;
     color: white !important;
+    transition: all 0.3s ease;
   }
   
   .navbar-brand:hover {
@@ -192,22 +178,25 @@
     background-color: transparent !important;
   }
   
-  /* Main navigation items - FIXED VERTICAL ALIGNMENT */
+  /* Main navigation items - PERFECT VERTICAL ALIGNMENT */
   .navbar-main {
     display: flex;
     align-items: center;
     height: 70px;
+    margin: 0;
   }
   
   .navbar-main > li {
     display: flex;
     align-items: center;
     height: 100%;
+    margin: 0;
   }
   
   .navbar-main > li > a {
     display: flex;
     align-items: center;
+    justify-content: center;
     height: 100%;
     padding: 0 15px;
     color: white !important;
@@ -216,12 +205,30 @@
     text-transform: uppercase;
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
+    position: relative;
   }
   
   .navbar-main > li > a:hover,
   .navbar-main > li > a:focus {
     color: #00d4aa !important;
     background-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  /* Smooth hover animation */
+  .navbar-main > li > a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: #00d4aa;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+  }
+  
+  .navbar-main > li > a:hover::after {
+    width: calc(100% - 30px);
   }
   
   /* Dropdown menus */
@@ -251,6 +258,13 @@
     display: flex;
     align-items: center;
     height: 70px;
+    margin: 0;
+  }
+  
+  .navbar-edit > li {
+    display: flex;
+    align-items: center;
+    height: 100%;
   }
   
   .edit-link {
@@ -272,7 +286,7 @@
     margin-right: 5px;
   }
   
-  /* Search form  */
+  /* Search form - PERFECTLY ALIGNED */
   .navbar-search {
     display: flex;
     align-items: center;
@@ -314,15 +328,28 @@
   .navbar-toggle {
     margin: 18px 15px;
     border-color: white;
+    transition: all 0.3s ease;
   }
   
   .navbar-toggle .icon-bar {
     background-color: white;
+    transition: all 0.3s ease;
   }
   
   .navbar-toggle:hover,
   .navbar-toggle:focus {
     background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Active state for current page */
+  .navbar-main > li.active > a {
+    color: #00d4aa !important;
+    background-color: rgba(255, 255, 255, 0.1);
+    font-weight: 600;
+  }
+  
+  .navbar-main > li.active > a::after {
+    width: calc(100% - 30px);
   }
   
   /* Mobile responsive adjustments */
@@ -331,26 +358,46 @@
     .navbar-edit,
     .navbar-search {
       height: auto;
+      display: block;
     }
     
     .navbar-main > li {
       height: auto;
+      display: block;
     }
     
     .navbar-main > li > a {
       height: auto;
       padding: 15px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      justify-content: flex-start;
+    }
+    
+    .navbar-main > li > a::after {
+      display: none;
     }
     
     .navbar-edit {
       padding: 15px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: block;
+    }
+    
+    .navbar-edit > li {
+      display: block;
+      height: auto;
+    }
+    
+    .edit-link {
+      height: auto;
+      padding: 15px;
+      display: block;
     }
     
     .navbar-search {
       padding: 15px;
       width: 100%;
+      display: block;
     }
     
     #google-search {
@@ -391,30 +438,10 @@
       font-size: 16px;
       padding: 15px 10px;
     }
-  }
-  
-  /* Active state for current page */
-  .navbar-main > li.active > a {
-    color: #00d4aa !important;
-    background-color: rgba(255, 255, 255, 0.1);
-    font-weight: 600;
-  }
-  
-  /* Smooth hover animation */
-  .navbar-main > li > a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 3px;
-    background: #00d4aa;
-    transition: all 0.3s ease;
-    transform: translateX(-50%);
-  }
-  
-  .navbar-main > li > a:hover::after {
-    width: calc(100% - 30px);
+    
+    .navbar-toggle {
+      margin: 15px;
+    }
   }
 </style>
 
@@ -422,13 +449,27 @@
   // Add active class to current page
   document.addEventListener('DOMContentLoaded', function() {
     var currentUrl = window.location.pathname;
+    var currentHash = window.location.hash;
     var navLinks = document.querySelectorAll('.navbar-main > li > a');
     
+    // Check for exact matches first
     navLinks.forEach(function(link) {
       var linkUrl = link.getAttribute('href');
-      if (currentUrl === linkUrl || 
-          (linkUrl.includes('#') && window.location.hash === linkUrl) ||
-          (currentUrl.endsWith('/') && linkUrl === './')) {
+      
+      // Remove the page.root prefix for comparison if present
+      var cleanLinkUrl = linkUrl.replace(/^\/[^\/]+\//, '/');
+      var cleanCurrentUrl = currentUrl.replace(/^\/[^\/]+\//, '/');
+      
+      // Check for exact path matches
+      if (cleanCurrentUrl === cleanLinkUrl || 
+          cleanCurrentUrl === linkUrl ||
+          (currentUrl.endsWith('/') && linkUrl === './') ||
+          (currentUrl === '/' && linkUrl === './')) {
+        link.parentElement.classList.add('active');
+      }
+      
+      // Check for hash matches
+      if (linkUrl.includes('#') && currentHash === linkUrl) {
         link.parentElement.classList.add('active');
       }
     });
@@ -437,9 +478,31 @@
     var dropdownLinks = document.querySelectorAll('.dropdown-menu a');
     dropdownLinks.forEach(function(link) {
       var linkUrl = link.getAttribute('href');
-      if (currentUrl === linkUrl) {
+      var cleanLinkUrl = linkUrl.replace(/^\/[^\/]+\//, '/');
+      var cleanCurrentUrl = currentUrl.replace(/^\/[^\/]+\//, '/');
+      
+      if (cleanCurrentUrl === cleanLinkUrl || currentUrl === linkUrl) {
         link.parentElement.classList.add('active');
         link.closest('.dropdown').classList.add('active');
+      }
+    });
+  });
+  
+  // Update active state on hash change
+  window.addEventListener('hashchange', function() {
+    var navLinks = document.querySelectorAll('.navbar-main > li > a');
+    var currentHash = window.location.hash;
+    
+    // Remove active class from all
+    navLinks.forEach(function(link) {
+      link.parentElement.classList.remove('active');
+    });
+    
+    // Add active class to matching hash
+    navLinks.forEach(function(link) {
+      var linkUrl = link.getAttribute('href');
+      if (linkUrl.includes('#') && currentHash === linkUrl) {
+        link.parentElement.classList.add('active');
       }
     });
   });
